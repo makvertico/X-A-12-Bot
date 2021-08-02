@@ -96,4 +96,4 @@ async def news(ctx):
 
 
 
-client.run("ODcxNjMxNDExNzEzNTQ0MjAz.YQeIAg.J6okInbkfoWV7tQigj7_JmT2a4M")
+client.run("ODcxNjMxNDExNzEzNTQ0MjAz.YQeIAg.dFRVr5pXo9tAinK_Yxaye-yXYfY")
