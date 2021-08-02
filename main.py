@@ -1,4 +1,3 @@
-# bot.py
 import json
 import os
 import random
@@ -10,9 +9,13 @@ from discord.ext import commands
 client = commands.Bot(command_prefix="!")
 
 
+
 @client.event
 async def on_ready():
     print("Iam ready!")
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="!news"))
+    
+    
 
 
 
@@ -39,7 +42,7 @@ async def news_india(ctx):
     
     
     total_results = int(json_data['totalResults'])
-    rand = random.randint(1, total_results-1)
+    rand = random.randint(1, 10)
     author = json_data['articles'][rand]['author']
     title = json_data['articles'][rand]['title']
     description = json_data['articles'][rand]['description']
@@ -78,16 +81,8 @@ async def news_dev(ctx):
     await ctx.channel.send("``"+"| Currently under development."+"``")
     await ctx.channel.send("``"+"| Author :: ΜΔK#8374"+"``")
     await ctx.channel.send("``"+"| Prefix: !  [!news]"+"``")
-
-
-@client.command()
-async def news(ctx):
-    await ctx.send("``"+"| !news_india > Top Tech Headlines of India"+"``")
-    await ctx.send("``"+"| !news_glob > Top Tech Headlines of World"+"``")
-    await ctx.send("``"+"| !news_status > Server Status"+"``")
-    await ctx.send("``"+"| !news_dev > Information"+"``")
-    await ctx.send("``"+"| Thank you!"+"``")
-
+    
+    
 @client.command()
 async def joke(ctx):
     data = requests.get("https://official-joke-api.appspot.com/random_joke")
@@ -96,8 +91,18 @@ async def joke(ctx):
     await ctx.channel.send(y["punchline"])  # Prints the joke answer    
 
 
+@client.command()
+async def news(ctx):
+    await ctx.channel.send("``"+"|- !news_india => Top Tech Headlines of India"+"``")
+    await ctx.channel.send("``"+"|- !news_glob => Top Tech Headlines of World"+"``")
+    await ctx.channel.send("``"+"|- !news_status => Server Status"+"``")
+    await ctx.channel.send("``"+"|- !news_dev => Information"+"``")
+    await ctx.channel.send("``"+"|- !joke  "+"``")
+    await ctx.channel.send("``"+"|- Thank you!"+"``")
 
-#hello there
+    
+
+
 
 
 
