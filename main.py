@@ -87,6 +87,13 @@ async def news(ctx):
     await ctx.send("``"+"| !news_dev > Information"+"``")
     await ctx.send("``"+"| Thank you!"+"``")
 
+@client.command()
+async def joke(ctx):
+    data = requests.get("https://official-joke-api.appspot.com/random_joke")
+    y = json.loads(data.text)
+    await ctx.channel.send(y["setup"])  # Prints the joke question
+    await ctx.channel.send(y["punchline"])  # Prints the joke answer    
+
 
 
 #hello there
