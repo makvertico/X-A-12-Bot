@@ -86,6 +86,7 @@ async def news(ctx):
     await ctx.send("``"+"| !news_glob > Top Tech Headlines of World"+"``")
     await ctx.send("``"+"| !news_status > Server Status"+"``")
     await ctx.send("``"+"| !news_dev > Information"+"``")
+    await ctx.send("``"+"| !joke > :)🤪"+"``")
     await ctx.send("``"+"| Thank you!"+"``")
 
 @client.command()
