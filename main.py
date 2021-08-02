@@ -43,7 +43,7 @@ async def news_india(ctx):
     
     
     total_results = int(json_data['totalResults'])
-    rand = random.randint(1, total_results-1)
+    rand = random.randint(1, 10)
     author = json_data['articles'][rand]['author']
     title = json_data['articles'][rand]['title']
     description = json_data['articles'][rand]['description']
