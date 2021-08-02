@@ -54,7 +54,6 @@ async def news_india(ctx):
     await ctx.send("**" + title + "**")
     await ctx.send("``" + author + "``")
     await ctx.send(url)
-    await ctx.send(urlImage)
 
 @client.command()
 async def news_glob(ctx):
