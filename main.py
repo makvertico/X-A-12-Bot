@@ -8,12 +8,13 @@ import requests
 from discord.ext import commands
 
 client = commands.Bot(command_prefix="!")
-await bot.change_presence(activity=discord.Game(name="!news"))
+
 
 
 @client.event
 async def on_ready():
     print("Iam ready!")
+    await bot.change_presence(activity=discord.Game(name="!news"))
     
     
 
