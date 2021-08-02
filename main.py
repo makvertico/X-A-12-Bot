@@ -19,7 +19,7 @@ async def on_ready():
 
 @client.command()
 async def news_status(ctx):
-    url = 'https://newsapi.org/v2/top-headlines?country=india&apiKey=353a4fcdcbe7413b8c99de9a311dcfc6'
+    url = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=353a4fcdcbe7413b8c99de9a311dcfc6'
     # Do the HTTP get request
     response = requests.get(url, verify=True)
     json_data = json.loads(response.text)
@@ -36,9 +36,10 @@ async def news_india(ctx):
     # Do the HTTP get request
     response = requests.get(url, verify=True)
     json_data = json.loads(response.text)
-    rand = random.randint(1, 5)
-    print(rand)
+    
+    
     total_results = json_data['totalResults']
+    rand = random.randint(1, total_results-1)
     author = json_data['articles'][rand]['author']
     title = json_data['articles'][rand]['title']
     description = json_data['articles'][rand]['description']
