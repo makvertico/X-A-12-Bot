@@ -82,23 +82,26 @@ async def news_dev(ctx):
     await ctx.channel.send("``"+"| Currently under development."+"``")
     await ctx.channel.send("``"+"| Author :: ΜΔK#8374"+"``")
     await ctx.channel.send("``"+"| Prefix: !  [!news]"+"``")
-
-
-@client.command()
-async def news(ctx):
-    await ctx.send("``"+"| !news_india > Top Tech Headlines of India"+"``")
-    await ctx.send("``"+"| !news_glob > Top Tech Headlines of World"+"``")
-    await ctx.send("``"+"| !news_status > Server Status"+"``")
-    await ctx.send("``"+"| !news_dev > Information"+"``")
-    await ctx.send("``"+"| !joke > :)🤪"+"``")
-    await ctx.send("``"+"| Thank you!"+"``")
-
+    
+    
 @client.command()
 async def joke(ctx):
     data = requests.get("https://official-joke-api.appspot.com/random_joke")
     y = json.loads(data.text)
     await ctx.channel.send(y["setup"])  # Prints the joke question
     await ctx.channel.send(y["punchline"])  # Prints the joke answer    
+
+
+@client.command()
+async def news(ctx):
+    await ctx.send("``"+"|- !news_india => Top Tech Headlines of India"+"``")
+    await ctx.send("``"+"|- !news_glob => Top Tech Headlines of World"+"``")
+    await ctx.send("``"+"|- !news_status => Server Status"+"``")
+    await ctx.send("``"+"|- !news_dev => Information"+"``")
+    await ctx.send("``"+"|- !joke => 🤪"+"``")
+    await ctx.send("``"+"|- Thank you!"+"``")
+
+    
 
 
 
