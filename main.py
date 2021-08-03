@@ -93,12 +93,12 @@ async def joke(ctx):
 
 @client.command()
 async def news(ctx):
-    await ctx.channel.send("``"+"|- !news_india => Top Tech Headlines of India"+"``")
-    await ctx.channel.send("``"+"|- !news_glob => Top Tech Headlines of World"+"``")
-    await ctx.channel.send("``"+"|- !news_status => Server Status"+"``")
-    await ctx.channel.send("``"+"|- !news_dev => Information"+"``")
-    await ctx.channel.send("``"+"|- !joke  "+"``")
-    await ctx.channel.send("``"+"|- Thank you!"+"``")
+    await ctx.channel.send(">>>"+"|- !news_india => Top Tech Headlines of India")
+    await ctx.channel.send(">>>"+"|- !news_glob => Top Tech Headlines of World")
+    await ctx.channel.send(">>>"+"|- !news_status => Server Status")
+    await ctx.channel.send(">>>"+"|- !news_dev => Information")
+    await ctx.channel.send(">>>"+"|- !joke  ")
+    await ctx.channel.send(">>>"+"|- Thank you!")
 
     
 
