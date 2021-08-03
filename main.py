@@ -7,12 +7,13 @@ import requests
 from discord.ext import commands
 
 client = commands.Bot(command_prefix="!")
+colors = [0xFFE4E1, 0x00FF7F, 0xD8BFD8, 0xDC143C, 0xFF4500, 0xDEB887, 0xADFF2F, 0x800000, 0x4682B4, 0x006400, 0x808080, 0xA0522D, 0xF08080, 0xC71585, 0xFFB6C1, 0x00CED1]
 
 
 
 @client.event
 async def on_ready():
-    print("Iam ready!")
+    print("Iam Ready!")
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="!news"))
     
     
@@ -28,12 +29,19 @@ async def news_status(ctx):
     json_data = json.loads(response.text)
     status_server = json_data['status']
     total_results = json_data['totalResults']
-    await ctx.send('Status is: {}'.format(status_server))
-    await ctx.send('Total Articles: {}'.format(total_results))
+
+    embedVar = discord.Embed(title="", description="", color= 0x00ff00)
+    embedVar.add_field(name="Server Status\n", value=status_server, inline=False)
+    embedVar.add_field(name="Total Results\n", value=total_results, inline=False)
+    await ctx.channel.send(embed=embedVar)
+    
+    # await ctx.send('Status is: {}'.format(status_server))
+    # await ctx.send('Total Articles: {}'.format(total_results))
 
 
 @client.command()
 async def news_india(ctx):
+    
 
     url = 'https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=353a4fcdcbe7413b8c99de9a311dcfc6'
     # Do the HTTP get request
@@ -50,9 +58,18 @@ async def news_india(ctx):
     urlImage = json_data['articles'][rand]['urlToImage']
     publishedAt = json_data['articles'][rand]['publishedAt']
     content = json_data['articles'][rand]['content']
-    await ctx.send("**" + title + "**")
-    await ctx.send("``" + author + "``")
-    await ctx.send(url)
+
+    embedVar = discord.Embed(title=title, description="", color = random.choice(colors))
+    embedVar.add_field(name="Author-", value=author, inline=True)
+    embedVar.add_field(name="---------------------------------", value=url, inline=False)
+    embedVar.add_field(name="---------------------------------", value=description, inline=False)
+    embedVar.add_field(name="---------------------------------", value=publishedAt, inline=False)
+    embedVar.set_image(url = urlImage)
+    await ctx.channel.send(embed=embedVar)
+
+    # await ctx.send("**" + title + "**")
+    # await ctx.send("``" + author + "``")
+    # await ctx.send(url)
 
 @client.command()
 async def news_glob(ctx):
@@ -71,50 +88,48 @@ async def news_glob(ctx):
     urlImage = json_data['articles'][rand]['urlToImage']
     publishedAt = json_data['articles'][rand]['publishedAt']
     content = json_data['articles'][rand]['content']
-    await ctx.send("**"+title+"**")
-    await ctx.send("``"+author+"``")
-    await ctx.send(url)
+    embedVar = discord.Embed(title=title, description="", color = random.choice(colors))
+    embedVar.add_field(name="Author-", value=author, inline=True)
+    embedVar.add_field(name="---------------------------------", value=url, inline=False)
+    embedVar.add_field(name="---------------------------------", value=description, inline=False)
+    embedVar.add_field(name="---------------------------------", value=publishedAt, inline=False)
+    embedVar.set_image(url = urlImage)
+    await ctx.channel.send(embed=embedVar)
 
 @client.command()
 async def news_dev(ctx):
-    await ctx.channel.send("``"+"| Hello, I am a X Æ A-12 Bot."+"``")
-    await ctx.channel.send("``"+"| Currently under development."+"``")
-    await ctx.channel.send("``"+"| Author :: ΜΔK#8374"+"``")
-    await ctx.channel.send("``"+"| Prefix: !  [!news]"+"``")
-    
+    embedVar = discord.Embed(title="", description="", color = random.choice(colors))
+    embedVar.add_field(name="Hello, I am a X Æ A-12 Bot.", value="~", inline=False)
+    embedVar.add_field(name="Currently under development.", value="~", inline=False)
+    embedVar.add_field(name="Author :: ΜΔK#8374", value="~", inline=False)
+    embedVar.add_field(name="Prefix: !  [!news]", value="~", inline=False)
+    await ctx.channel.send(embed=embedVar)
+
     
 @client.command()
 async def joke(ctx):
     data = requests.get("https://official-joke-api.appspot.com/random_joke")
     y = json.loads(data.text)
-    await ctx.channel.send(y["setup"])  # Prints the joke question
-    await ctx.channel.send(y["punchline"])  # Prints the joke answer    
+    setup = y["setup"]  
+    punchline = y["punchline"] 
+    embedVar = discord.Embed(title="", description="", color = random.choice(colors))
+    embedVar.add_field(name=setup, value=punchline, inline=False)
+    # embedVar.add_field(name="\t~", value=punchline, inline=False)
+    await ctx.channel.send(embed=embedVar)
+    
+   
 
 
 @client.command()
 async def news(ctx):
-<<<<<<< HEAD
-    await ctx.channel.send(">>>"+"|- !news_india => Top Tech Headlines of India")
-    await ctx.channel.send(">>>"+"|- !news_glob => Top Tech Headlines of World")
-    await ctx.channel.send(">>>"+"|- !news_status => Server Status")
-    await ctx.channel.send(">>>"+"|- !news_dev => Information")
-    await ctx.channel.send(">>>"+"|- !joke  ")
-    await ctx.channel.send(">>>"+"|- Thank you!")
-=======
-    await ctx.channel.send("``"+"|- !news_india => Top Tech Headlines of India"+"``")
-    await ctx.channel.send("``"+"|- !news_glob => Top Tech Headlines of World"+"``")
-    await ctx.channel.send("``"+"|- !news_status => Server Status"+"``")
-    await ctx.channel.send("``"+"|- !news_dev => Information"+"``")
-    await ctx.channel.send("``"+"|- !joke  "+"``")
-    await ctx.channel.send("``"+"|- Thank you!"+"``")
->>>>>>> 6f7a34843644e38cc48060fdfcb0dbe0cd664d6d
-
-    
-
-
-
-
-
+    embedVar = discord.Embed(title="", description="", color = random.choice(colors))
+    embedVar.add_field(name="\n~", value="!news_india ~ Top Tech Headlines of India", inline=False)
+    embedVar.add_field(name="\n~", value="!news_glob ~ Top Tech Headlines of World", inline=False)
+    embedVar.add_field(name="\n~", value="!news_status ~ Server Status", inline=False)
+    embedVar.add_field(name="\n~", value="!news_dev ~ Information", inline=False)
+    embedVar.add_field(name="\n~", value="!joke  ~ :)", inline=False)
+    embedVar.add_field(name="\n~", value="Thank you!.", inline=False)
+    await ctx.channel.send(embed=embedVar)
 
 
 
