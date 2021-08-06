@@ -182,13 +182,14 @@ async def news_dev(ctx):
 async def news(ctx):
     print('!news command')
     embedVar = discord.Embed(title="", description="", color = random.choice(colors))
-    embedVar.add_field(name="\n~", value="!news_india ~ Top Tech Headlines of India", inline=False)
-    embedVar.add_field(name="\n~", value="!news_globe ~ Top Tech Headlines of World", inline=False)
-    embedVar.add_field(name="\n~", value="!news_status ~ Server Status", inline=False)
-    embedVar.add_field(name="\n~", value="!news_dev ~ Information", inline=False)
-    embedVar.add_field(name="\n~", value="!news_stop ~ Stop auto mode", inline=False)
-    embedVar.add_field(name="\n~", value="!joke  ~ :)", inline=False)
-    embedVar.add_field(name="\n~", value="Thank you!.", inline=False)
+    embedVar.add_field(name="\n~", value="**!news_india** ~ Top Tech Headlines of India", inline=False)
+    embedVar.add_field(name="\n~", value="**!news_globe** ~ Top Tech Headlines of World", inline=False)
+    embedVar.add_field(name="\n~", value="**!news_status** ~ Server Status", inline=False)
+    embedVar.add_field(name="\n~", value="**!news_dev** ~ Information", inline=False)
+    embedVar.add_field(name="\n~", value="**!news_start** ~ Start ``[auto mode]``", inline=False)
+    embedVar.add_field(name="\n~", value="**!news_stop** ~ Stop ``[auto mode]``", inline=False)
+    embedVar.add_field(name="\n~", value="**!joke**  ~ 🤪", inline=False)
+    embedVar.add_field(name="\n~", value="**Thank you!.**", inline=False)
     await ctx.channel.send(embed=embedVar)
     
 
