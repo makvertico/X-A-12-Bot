@@ -133,7 +133,7 @@ async def joke(ctx):
 
      
 
-@tasks.loop(hours=2)
+@tasks.loop(minutes=2)
 async def auto_send():
     print('Auto Mode') 
     channel = await client.fetch_channel('852579630807777376')
