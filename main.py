@@ -1,6 +1,7 @@
 import json
-import os
 import random
+
+
 
 import discord
 import requests
@@ -19,21 +20,21 @@ async def on_ready():
     
 @client.command()
 async def news_start(ctx):
-    print('!news_start command') 
-    auto_send.start()
+    print('!news_start command')
     print("Auto Mode = Enabled")
     embedVar = discord.Embed(title="", description="", color = random.choice(colors))
     embedVar.add_field(name="**MODE** [auto]  " , value="``Enabled``")
-    await ctx.channel.send(embed=embedVar)
+    await ctx.channel.send(embed=embedVar) 
+    return auto_send.start()
+    
         
 @client.command()
 async def news_stop(ctx):
-    auto_send.stop()
     print("Auto Mode = Disabled")
     embedVar = discord.Embed(title="", description="", color = random.choice(colors))
     embedVar.add_field(name="**MODE** [auto]  " , value="``Disabled``")
     await ctx.channel.send(embed=embedVar)
-
+    return auto_send.cancel()
 
 
 @client.command()
@@ -133,7 +134,7 @@ async def joke(ctx):
 
      
 
-@tasks.loop(minutes=2)
+@tasks.loop(minutes=30)
 async def auto_send():
     print('Auto Mode') 
     channel = await client.fetch_channel('852579630807777376')
@@ -160,9 +161,9 @@ async def auto_send():
     embedVar.add_field(name="---------------------------------", value=description, inline=False)
     embedVar.add_field(name="---------------------------------", value=publishedAt, inline=False)
     embedVar.set_image(url = urlImage)
-    await channel.send(embed=embedVar)   
     print('Data Fetched successfully') 
-
+    return await channel.send(embed=embedVar)   
+    
 
 @client.command()
 async def news_dev(ctx):
