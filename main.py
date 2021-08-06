@@ -17,23 +17,39 @@ async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="!news"))
     
     
-
+@client.command()
+async def news_start(ctx):
+    print('!news_start command') 
+    auto_send.start()
+    print("Auto Mode = Enabled")
+    embedVar = discord.Embed(title="", description="", color = random.choice(colors))
+    embedVar.add_field(name="**MODE** [auto]  " , value="``Enabled``")
+    await ctx.channel.send(embed=embedVar)
+        
+@client.command()
+async def news_stop(ctx):
+    auto_send.stop()
+    print("Auto Mode = Disabled")
+    embedVar = discord.Embed(title="", description="", color = random.choice(colors))
+    embedVar.add_field(name="**MODE** [auto]  " , value="``Disabled``")
+    await ctx.channel.send(embed=embedVar)
 
 
 
 @client.command()
 async def news_status(ctx):
     url = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=353a4fcdcbe7413b8c99de9a311dcfc6'
-    # Do the HTTP get request
+    #request
     response = requests.get(url, verify=True)
     json_data = json.loads(response.text)
     status_server = json_data['status']
     total_results = json_data['totalResults']
-
+ 
     embedVar = discord.Embed(title="", description="", color= 0x00ff00)
     embedVar.add_field(name="Server Status\n", value=status_server, inline=False)
     embedVar.add_field(name="Total Results\n", value=total_results, inline=False)
     await ctx.channel.send(embed=embedVar)
+    print("Fetching Headlines from country = US ")
     
     # await ctx.send('Status is: {}'.format(status_server))
     # await ctx.send('Total Articles: {}'.format(total_results))
@@ -44,7 +60,7 @@ async def news_india(ctx):
     
 
     url = 'https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=353a4fcdcbe7413b8c99de9a311dcfc6'
-    # Do the HTTP get request
+    #request
     response = requests.get(url, verify=True)
     json_data = json.loads(response.text)
     
@@ -72,8 +88,8 @@ async def news_india(ctx):
     # await ctx.send(url)
 
 @client.command()
-async def news_glob(ctx):
-
+async def news_globe(ctx):
+    print('!news_globe command') 
     url = 'https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=353a4fcdcbe7413b8c99de9a311dcfc6'
     # Do the HTTP get request
     response = requests.get(url, verify=True)
@@ -88,6 +104,7 @@ async def news_glob(ctx):
     urlImage = json_data['articles'][rand]['urlToImage']
     publishedAt = json_data['articles'][rand]['publishedAt']
     content = json_data['articles'][rand]['content']
+    print('Fetching Data: country=us')
     embedVar = discord.Embed(title=title, description="", color = random.choice(colors))
     embedVar.add_field(name="Author-", value=author, inline=True)
     embedVar.add_field(name="---------------------------------", value=url, inline=False)
@@ -95,8 +112,10 @@ async def news_glob(ctx):
     embedVar.add_field(name="---------------------------------", value=publishedAt, inline=False)
     embedVar.set_image(url = urlImage)
     await ctx.channel.send(embed=embedVar)
+    print('Data Fetched successfully') 
 
 
+    
 
     
 @client.command()
@@ -108,11 +127,15 @@ async def joke(ctx):
     embedVar = discord.Embed(title="", description="", color = random.choice(colors))
     embedVar.add_field(name=setup, value=punchline, inline=False)
     await ctx.channel.send(embed=embedVar)
+    print('Data Fetched successfully') 
 
 
 
-@tasks.loop(seconds=10)
+     
+
+@tasks.loop(hours=2)
 async def auto_send():
+    print('Auto Mode') 
     channel = await client.fetch_channel('852579630807777376')
     url = 'https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=353a4fcdcbe7413b8c99de9a311dcfc6'
     # Do the HTTP get request
@@ -129,6 +152,7 @@ async def auto_send():
     urlImage = json_data['articles'][rand]['urlToImage']
     publishedAt = json_data['articles'][rand]['publishedAt']
     content = json_data['articles'][rand]['content']
+    print('Fetching Data: country=in')
 
     embedVar = discord.Embed(title=title, description="", color = random.choice(colors))
     embedVar.add_field(name="Author-", value=author, inline=True)
@@ -136,31 +160,37 @@ async def auto_send():
     embedVar.add_field(name="---------------------------------", value=description, inline=False)
     embedVar.add_field(name="---------------------------------", value=publishedAt, inline=False)
     embedVar.set_image(url = urlImage)
-    await channel.send(embed=embedVar)    
+    await channel.send(embed=embedVar)   
+    print('Data Fetched successfully') 
 
 
 @client.command()
 async def news_dev(ctx):
+    print('!news_dev command') 
     embedVar = discord.Embed(title="", description="", color = random.choice(colors))
     embedVar.add_field(name="Hello, I am a X Æ A-12 Bot.", value="~", inline=False)
     embedVar.add_field(name="Currently under development.", value="~", inline=False)
     embedVar.add_field(name="Author :: ΜΔK#8374", value="~", inline=False)
     embedVar.add_field(name="Prefix: !  [!news]", value="~", inline=False)
-    await ctx.channel.send(embed=embedVar)    
+    await ctx.channel.send(embed=embedVar)
+       
     
    
 
 
 @client.command()
 async def news(ctx):
+    print('!news command')
     embedVar = discord.Embed(title="", description="", color = random.choice(colors))
     embedVar.add_field(name="\n~", value="!news_india ~ Top Tech Headlines of India", inline=False)
-    embedVar.add_field(name="\n~", value="!news_glob ~ Top Tech Headlines of World", inline=False)
+    embedVar.add_field(name="\n~", value="!news_globe ~ Top Tech Headlines of World", inline=False)
     embedVar.add_field(name="\n~", value="!news_status ~ Server Status", inline=False)
     embedVar.add_field(name="\n~", value="!news_dev ~ Information", inline=False)
+    embedVar.add_field(name="\n~", value="!news_stop ~ Stop auto mode", inline=False)
     embedVar.add_field(name="\n~", value="!joke  ~ :)", inline=False)
     embedVar.add_field(name="\n~", value="Thank you!.", inline=False)
     await ctx.channel.send(embed=embedVar)
+    
 
 
 
