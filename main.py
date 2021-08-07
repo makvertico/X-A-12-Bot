@@ -1,9 +1,9 @@
 import json
 import random
 
-
-
+from pprint import pprint
 import discord
+from discord import channel
 import requests
 from discord.ext import commands ,tasks
 
@@ -20,21 +20,23 @@ async def on_ready():
     
 @client.command()
 async def news_start(ctx):
+    auto_send.start()
     print('!news_start command')
     print("Auto Mode = Enabled")
+    
     embedVar = discord.Embed(title="", description="", color = random.choice(colors))
     embedVar.add_field(name="**MODE** [auto]  " , value="``Enabled``")
-    await ctx.channel.send(embed=embedVar) 
-    return auto_send.start()
+    return await ctx.channel.send(embed=embedVar) 
+   
     
         
 @client.command()
 async def news_stop(ctx):
+    auto_send.cancel()
     print("Auto Mode = Disabled")
     embedVar = discord.Embed(title="", description="", color = random.choice(colors))
     embedVar.add_field(name="**MODE** [auto]  " , value="``Disabled``")
-    await ctx.channel.send(embed=embedVar)
-    return auto_send.cancel()
+    return await ctx.channel.send(embed=embedVar)
 
 
 @client.command()
@@ -56,6 +58,7 @@ async def news_status(ctx):
     # await ctx.send('Total Articles: {}'.format(total_results))
 
 
+
 @client.command()
 async def news_india(ctx):
     
@@ -63,11 +66,13 @@ async def news_india(ctx):
     url = 'https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=353a4fcdcbe7413b8c99de9a311dcfc6'
     #request
     response = requests.get(url, verify=True)
-    json_data = json.loads(response.text)
-    
+    json_url = json.loads(response.text)
+    data_str = json.dumps(json_url).replace('null', '"No Data"')
+    json_data = json.loads(data_str)
+    print(json_data)
     
     total_results = int(json_data['totalResults'])
-    rand = random.randint(1, 10)
+    rand = random.randint(1, 20)
     author = json_data['articles'][rand]['author']
     title = json_data['articles'][rand]['title']
     description = json_data['articles'][rand]['description']
@@ -75,13 +80,14 @@ async def news_india(ctx):
     urlImage = json_data['articles'][rand]['urlToImage']
     publishedAt = json_data['articles'][rand]['publishedAt']
     content = json_data['articles'][rand]['content']
+    
 
     embedVar = discord.Embed(title=title, description="", color = random.choice(colors))
-    embedVar.add_field(name="Author-", value=author, inline=True)
+    embedVar.add_field(name="Author", value=author, inline=True)
     embedVar.add_field(name="---------------------------------", value=url, inline=False)
+    embedVar.add_field(name="---------------------------------", value=content, inline=False)
     embedVar.add_field(name="---------------------------------", value=description, inline=False)
     embedVar.add_field(name="---------------------------------", value=publishedAt, inline=False)
-    embedVar.set_image(url = urlImage)
     await ctx.channel.send(embed=embedVar)
 
     # await ctx.send("**" + title + "**")
@@ -92,12 +98,14 @@ async def news_india(ctx):
 async def news_globe(ctx):
     print('!news_globe command') 
     url = 'https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=353a4fcdcbe7413b8c99de9a311dcfc6'
-    # Do the HTTP get request
     response = requests.get(url, verify=True)
-    json_data = json.loads(response.text)
-    rand = random.randint(1, 5)
-    print(rand)
-
+    json_url = json.loads(response.text)
+    data_str = json.dumps(json_url).replace('null', '"No Data"')
+    json_data = json.loads(data_str)
+    print(json_data)
+    
+    total_results = int(json_data['totalResults'])
+    rand = random.randint(1, 20)
     author = json_data['articles'][rand]['author']
     title = json_data['articles'][rand]['title']
     description = json_data['articles'][rand]['description']
@@ -105,13 +113,14 @@ async def news_globe(ctx):
     urlImage = json_data['articles'][rand]['urlToImage']
     publishedAt = json_data['articles'][rand]['publishedAt']
     content = json_data['articles'][rand]['content']
-    print('Fetching Data: country=us')
+    
+
     embedVar = discord.Embed(title=title, description="", color = random.choice(colors))
-    embedVar.add_field(name="Author-", value=author, inline=True)
+    embedVar.add_field(name="Author", value=author, inline=True)
     embedVar.add_field(name="---------------------------------", value=url, inline=False)
+    embedVar.add_field(name="---------------------------------", value=content, inline=False)
     embedVar.add_field(name="---------------------------------", value=description, inline=False)
     embedVar.add_field(name="---------------------------------", value=publishedAt, inline=False)
-    embedVar.set_image(url = urlImage)
     await ctx.channel.send(embed=embedVar)
     print('Data Fetched successfully') 
 
@@ -136,34 +145,37 @@ async def joke(ctx):
 
 @tasks.loop(minutes=30)
 async def auto_send():
-    print('Auto Mode') 
     channel = await client.fetch_channel('852579630807777376')
-    url = 'https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=353a4fcdcbe7413b8c99de9a311dcfc6'
+    if not channel:
+            await("Don't have the Permission to send in this Channel!")
+    else:
+        url = 'https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=353a4fcdcbe7413b8c99de9a311dcfc6'
     # Do the HTTP get request
-    response = requests.get(url, verify=True)
-    json_data = json.loads(response.text)
+        response = requests.get(url, verify=True)
+        json_url = json.loads(response.text)
+        data_str = json.dumps(json_url).replace('null', '"No Data"')
+        json_data = json.loads(data_str)
+        print(json_data)
     
+        total_results = int(json_data['totalResults'])
+        rand = random.randint(1, 20)
+        author = json_data['articles'][rand]['author']
+        title = json_data['articles'][rand]['title']
+        description = json_data['articles'][rand]['description']
+        url = json_data['articles'][rand]['url']
+        urlImage = json_data['articles'][rand]['urlToImage']
+        publishedAt = json_data['articles'][rand]['publishedAt']
+        content = json_data['articles'][rand]['content']
     
-    total_results = int(json_data['totalResults'])
-    rand = random.randint(1, 10)
-    author = json_data['articles'][rand]['author']
-    title = json_data['articles'][rand]['title']
-    description = json_data['articles'][rand]['description']
-    url = json_data['articles'][rand]['url']
-    urlImage = json_data['articles'][rand]['urlToImage']
-    publishedAt = json_data['articles'][rand]['publishedAt']
-    content = json_data['articles'][rand]['content']
-    print('Fetching Data: country=in')
 
-    embedVar = discord.Embed(title=title, description="", color = random.choice(colors))
-    embedVar.add_field(name="Author-", value=author, inline=True)
-    embedVar.add_field(name="---------------------------------", value=url, inline=False)
-    embedVar.add_field(name="---------------------------------", value=description, inline=False)
-    embedVar.add_field(name="---------------------------------", value=publishedAt, inline=False)
-    embedVar.set_image(url = urlImage)
-    print('Data Fetched successfully') 
-    return await channel.send(embed=embedVar)   
-    
+        embedVar = discord.Embed(title=title, description="", color = random.choice(colors))
+        embedVar.add_field(name="Author", value=author, inline=True)
+        embedVar.add_field(name="---------------------------------", value=url, inline=False)
+        embedVar.add_field(name="---------------------------------", value=content, inline=False)
+        embedVar.add_field(name="---------------------------------", value=description, inline=False)
+        embedVar.add_field(name="---------------------------------", value=publishedAt, inline=False)
+        await channel.send(embed=embedVar)  
+        
 
 @client.command()
 async def news_dev(ctx):
@@ -193,6 +205,8 @@ async def news(ctx):
     embedVar.add_field(name="\n~", value="**Thank you!.**", inline=False)
     await ctx.channel.send(embed=embedVar)
     
+
+
 
 
 
