@@ -70,9 +70,12 @@ async def news_india(ctx):
     data_str = json.dumps(json_url).replace('null', '"No Data"')
     json_data = json.loads(data_str)
     print(json_data)
+    print("Clean Json : ",json_data)
+    json_size = len(json_data['articles'])
+    print("Length of the Json: ",json_size)
     
     total_results = int(json_data['totalResults'])
-    rand = random.randint(1, 20)
+    rand = random.randint(1, json_size-1)
     author = json_data['articles'][rand]['author']
     title = json_data['articles'][rand]['title']
     description = json_data['articles'][rand]['description']
@@ -103,9 +106,12 @@ async def news_globe(ctx):
     data_str = json.dumps(json_url).replace('null', '"No Data"')
     json_data = json.loads(data_str)
     print(json_data)
+    print("Clean Json : ",json_data)
+    json_size = len(json_data['articles'])
+    print("Length of the Json: ",json_size)
     
     total_results = int(json_data['totalResults'])
-    rand = random.randint(1, 20)
+    rand = random.randint(1, json_size-1)
     author = json_data['articles'][rand]['author']
     title = json_data['articles'][rand]['title']
     description = json_data['articles'][rand]['description']
