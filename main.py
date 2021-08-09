@@ -149,9 +149,9 @@ async def joke(ctx):
 
      
 
-@tasks.loop(minutes=30)
+@tasks.loop(hours=3)
 async def auto_send():
-    channel = await client.fetch_channel('873929911549706292')
+    channel = await client.fetch_channel('874319484389838899')
     if not channel:
             await("Don't have the Permission to send in this Channel!")
     else:
