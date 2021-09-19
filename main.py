@@ -134,16 +134,16 @@ async def news_globe(ctx):
     
 
     
-@client.command()
-async def joke(ctx):
-    data = requests.get("https://official-joke-api.appspot.com/random_joke")
-    y = json.loads(data.text)
-    setup = y["setup"]  
-    punchline = y["punchline"] 
-    embedVar = discord.Embed(title="", description="", color = random.choice(colors))
-    embedVar.add_field(name=setup, value=punchline, inline=False)
-    await ctx.channel.send(embed=embedVar)
-    print('Data Fetched successfully') 
+# @client.command()
+# async def joke(ctx):
+#     data = requests.get("https://official-joke-api.appspot.com/random_joke")
+#     y = json.loads(data.text)
+#     setup = y["setup"]  
+#     punchline = y["punchline"] 
+#     embedVar = discord.Embed(title="", description="", color = random.choice(colors))
+#     embedVar.add_field(name=setup, value=punchline, inline=False)
+#     await ctx.channel.send(embed=embedVar)
+#     print('Data Fetched successfully') 
 
 
 
@@ -209,7 +209,7 @@ async def news(ctx):
     embedVar.add_field(name="\n~", value="**!news_dev** ~ Information", inline=False)
     embedVar.add_field(name="\n~", value="**!news_start** ~ Start ``[auto mode]``", inline=False)
     embedVar.add_field(name="\n~", value="**!news_stop** ~ Stop ``[auto mode]``", inline=False)
-    embedVar.add_field(name="\n~", value="**!joke**  ~ 🤪", inline=False)
+    # embedVar.add_field(name="\n~", value="**!joke**  ~ 🤪", inline=False)
     embedVar.add_field(name="\n~", value="**Thank you!.**", inline=False)
     await ctx.channel.send(embed=embedVar)
     
