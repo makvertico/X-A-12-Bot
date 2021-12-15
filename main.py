@@ -313,4 +313,4 @@ async def news(ctx):
 
 
 
-client.run("ODcxNjMxNDExNzEzNTQ0MjAz.YQeIAg.dFRVr5pXo9tAinK_Yxaye-yXYfY")
+client.run("TOKEN")
